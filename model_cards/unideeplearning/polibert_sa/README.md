@@ -13,14 +13,20 @@ widget:
 ## Model description  
   
 This model performs sentiment analysis on Italian political twitter sentences. It was trained starting from an instance of "bert-base-italian-uncased-xxl" and fine-tuned on an Italian dataset of tweets.
+You can try it out at https://www.unideeplearning.com/twitter_sa/
   
 #### Hands-on  
   
 ```python
 import torch
 from torch import nn 
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-text = "Giueseppe Rossi è un pessimo politico"
+tokenizer = AutoTokenizer.from_pretrained("unideeplearning/polibert_sa")
+model = AutoModelForSequenceClassification.from_pretrained("unideeplearning/polibert_sa")
+			
+
+text = "Giuseppe Rossi è un pessimo politico"
 input_ids = tokenizer.encode(text, add_special_tokens=True, return_tensors= 'pt')
 
 logits, = model(input_ids)
@@ -42,3 +48,5 @@ print(prob.argmax().tolist())
 
 Thanks to the support from: 
 the [Hugging Face](https://huggingface.co/), Unione Professionisti (https://www.unioneprofessionisti.com/)
+
+www.unideeplearning.com
